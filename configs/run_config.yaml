@@ -1,0 +1,100 @@
+# =============================================================================
+# Post-Training Pipeline 运行配置
+# 控制数据规模和评估范围，支持快速验证和完整实验两种模式
+# =============================================================================
+
+run_mode: "smoke_test"  # 可选: "smoke_test" | "full_run"
+
+# --- 模型配置 ---
+model:
+  name: "Qwen/Qwen2.5-1.5B"           # 主方案：1.5B 全量微调
+  dtype: "bfloat16"                     # MPS 支持 bf16
+  device: "mps"                         # Apple Silicon GPU
+  fallback_device: "cpu"                # MPS 不支持时回退
+
+# --- Smoke Test 模式 ---
+# 20-30 分钟跑完全流程，验证代码无报错
+smoke_test:
+  sft_sample_size: 2000                 # SFT 取 2000 条
+  dpo_sample_size: 1000                 # DPO 取 1000 对
+  eval_tasks: "hellaswag"               # 只跑 1 个 benchmark
+  max_steps: 100                        # MPS 上 ~28 分钟
+  eval_limit: 200                       # 评估样本上限
+  logging_steps: 10                     # 每 10 步记录
+  save_steps: 50                        # 每 50 步保存
+  description: "20-30分钟跑完全流程，验证代码无报错"
+
+# --- Full Run 模式 ---
+# 7-12 小时跑完，产出完整实验结果
+full_run:
+  sft_sample_size: 57000                # SFT ~57K
+  dpo_sample_size: 30000                # DPO ~30K
+  eval_tasks: "hellaswag,arc_easy,mmlu,winogrande,truthfulqa"
+  max_steps: -1                         # 跑完所有数据
+  eval_limit: -1                        # 不限制评估样本
+  logging_steps: 10
+  save_steps: 500
+  description: "7-12小时跑完，产出完整实验结果"
+
+# --- SFT 数据子采样配置 ---
+# 对应 Tülu 3 论文 Table 2 的数据配比
+sft_subsets:
+  flan_v2:
+    hf_id: "ai2-adapt-dev/flan_v2_converted"
+    full_size: 89982
+    subsample: 10000
+    skill: "通用指令跟随"
+  numinamath:
+    hf_id: "AI-MO/NuminaMath-TIR"
+    full_size: 64312
+    subsample: 5000
+    skill: "数学推理"
+  wildguardmix:
+    hf_id: "allenai/wildguardmix"
+    full_size: 50000
+    subsample: 10000
+    skill: "安全拒绝"
+  wildjailbreak:
+    hf_id: "allenai/wildjailbreak"
+    full_size: 50000
+    subsample: 10000
+    skill: "对抗安全"
+  persona_if:
+    hf_id: "allenai/tulu-3-sft-personas-instruction-following"
+    full_size: 30000
+    subsample: 5000
+    skill: "精确指令遵循"
+  persona_math:
+    hf_id: "allenai/tulu-3-sft-personas-math"
+    full_size: 50000
+    subsample: 3000
+    skill: "合成数学"
+  persona_code:
+    hf_id: "allenai/tulu-3-sft-personas-code"
+    full_size: 50000
+    subsample: 2000
+    skill: "合成代码"
+  coconot:
+    hf_id: "ai2-adapt-dev/coconot_converted"
+    full_size: 10983
+    subsample: 5000
+    skill: "防 over-refusal"
+  no_robots:
+    hf_id: "HuggingFaceH4/no_robots"
+    full_size: 9500
+    subsample: 9500
+    skill: "人工高质量对话"
+  openassistant:
+    hf_id: "timdettmers/openassistant-guanaco"
+    full_size: 7132
+    subsample: 7132
+    skill: "多轮对话"
+
+# --- DPO 数据配置 ---
+dpo_dataset:
+  hf_id: "allenai/llama-3.1-tulu-3-8b-preference-mixture"
+  full_size: 337000
+  subsample: 30000
+
+# --- 随机种子 ---
+seed: 42

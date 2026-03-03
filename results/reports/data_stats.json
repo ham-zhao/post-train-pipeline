@@ -1,0 +1,32 @@
+{
+  "run_mode": "smoke_test",
+  "sft_total": 1999,
+  "dpo_total": 1000,
+  "sft_by_source": {
+    "flan_v2": 300,
+    "wildjailbreak": 300,
+    "wildguardmix": 300,
+    "no_robots": 285,
+    "openassistant": 214,
+    "persona_if": 150,
+    "numinamath": 150,
+    "coconot": 150,
+    "persona_math": 90,
+    "persona_code": 60
+  },
+  "decontamination": {
+    "total": 1999,
+    "benchmarks": {
+      "hellaswag": {
+        "matches": 0,
+        "rate": "0.00%"
+      },
+      "arc_easy": {
+        "matches": 0,
+        "rate": "0.00%"
+      }
+    },
+    "removed": 0,
+    "clean_total": 1999
+  }
+}

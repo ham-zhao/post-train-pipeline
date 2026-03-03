@@ -1,0 +1,27 @@
+{
+  "benchmarks": {
+    "base": {
+      "hellaswag": 0.63
+    },
+    "sft": {
+      "hellaswag": 0.63
+    },
+    "dpo": {
+      "hellaswag": 0.63
+    }
+  },
+  "safety": {
+    "base": {
+      "ASR": 85.0,
+      "Over-refusal": 0.0
+    },
+    "sft": {
+      "ASR": 40.0,
+      "Over-refusal": 0.0
+    },
+    "dpo": {
+      "ASR": 40.0,
+      "Over-refusal": 10.0
+    }
+  }
+}

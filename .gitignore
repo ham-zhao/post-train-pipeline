@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# Model checkpoints (too large for git)
+results/checkpoints/
+results/logs/
+
+# lm-eval raw output (large JSON files with model paths)
+results/eval_results/base/Qwen__*/
+results/eval_results/sft/__Users__*/
+results/eval_results/dpo/__Users__*/
+
+# Data files (can be regenerated)
+data/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Claude Code
+.claude/

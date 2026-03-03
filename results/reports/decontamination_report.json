@@ -1,0 +1,15 @@
+{
+  "total": 1999,
+  "benchmarks": {
+    "hellaswag": {
+      "matches": 0,
+      "rate": "0.00%"
+    },
+    "arc_easy": {
+      "matches": 0,
+      "rate": "0.00%"
+    }
+  },
+  "removed": 0,
+  "clean_total": 1999
+}

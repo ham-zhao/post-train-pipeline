@@ -1,0 +1,44 @@
+# =============================================================================
+# SFT 训练配置
+# 对应 Tülu 3 论文 Section 3: Supervised Finetuning
+# =============================================================================
+
+# --- 训练超参数 ---
+# Tülu 3 原始: lr=5e-6, epochs=2, batch=128 (on 64×H100)
+# 本项目缩放: batch_size 适配 128GB 统一内存
+training:
+  learning_rate: 5.0e-6               # 与 Tülu 3 一致
+  num_train_epochs: 2                 # 与 Tülu 3 一致
+  per_device_train_batch_size: 1      # MPS 内存受限，使用 batch=1
+  gradient_accumulation_steps: 32     # 有效 batch_size = 1 × 32 = 32
+  warmup_ratio: 0.03                  # 前 3% 步数做 warmup
+  weight_decay: 0.0
+  lr_scheduler_type: "linear"         # 线性衰减
+  max_seq_length: 1024                # 减小以适配 MPS 内存
+  gradient_checkpointing: true        # 节省显存
+
+# --- 优化器 ---
+optimizer:
+  name: "adamw_torch"                 # PyTorch 原生 AdamW
+  betas: [0.9, 0.999]
+  eps: 1.0e-8
+
+# --- 日志与保存 ---
+logging:
+  logging_steps: 10                   # 每 10 步记录 loss
+  eval_steps: 50                      # 每 50 步验证
+  save_strategy: "steps"
+  eval_strategy: "steps"
+  load_best_model_at_end: true
+  metric_for_best_model: "eval_loss"
+
+# --- 输出路径 ---
+output:
+  dir: "results/checkpoints/sft"
+  logging_dir: "results/logs/sft"
+
+# --- 数据 ---
+data:
+  train_file: "data/sft_mix/train.jsonl"
+  eval_split: 0.05                    # 5% 做验证集
+  max_samples: null                   # 由 run_config.yaml 控制
