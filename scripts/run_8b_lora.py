@@ -3,6 +3,11 @@
 可选：Llama-3.1-8B QLoRA 训练脚本
 用法: python scripts/run_8b_lora.py
 
+产出文件：
+  results/checkpoints/lora_8b/adapter_model.safetensors  - LoRA adapter 权重
+  results/checkpoints/lora_8b/adapter_config.json        - LoRA 配置
+  results/checkpoints/lora_8b/training_log.json          - 训练日志
+
 8B 模型在 128GB M4 Max 上无法全量微调，需要使用 QLoRA（4-bit 量化 + LoRA）。
 内存估算：
   - 4-bit 量化模型: ~4.5GB
@@ -11,7 +16,9 @@
   - 激活值: ~2-4GB
   - 总计: ~8-12GB（128GB 内存完全够用）
 
-注意：MPS 对 4-bit 量化支持有限，可能需要 CPU 回退。
+注意：
+  - MPS 对 4-bit 量化支持有限，可能需要 CPU 回退
+  - 本脚本为独立参考脚本，超参直接内联而非走 config（降级方案）
 """
 
 import sys

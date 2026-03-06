@@ -3,6 +3,11 @@
 DPO 训练脚本
 用法: python scripts/run_dpo.py
 耗时 >30 分钟时建议: caffeinate -i python scripts/run_dpo.py
+
+产出文件：
+  results/checkpoints/dpo/model.safetensors    - DPO 模型权重
+  results/checkpoints/dpo/tokenizer.json       - Tokenizer
+  results/checkpoints/dpo/training_log.json    - 训练日志（loss/chosen_rewards/rejected_rewards per step）
 """
 
 import sys

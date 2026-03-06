@@ -5,6 +5,12 @@
 
 用法: python scripts/run_download.py
 
+产出文件：
+  data/sft_mix/train.jsonl          - SFT 训练数据（统一格式）
+  data/dpo_mix/train.jsonl          - DPO 偏好数据（prompt/chosen/rejected）
+  results/reports/data_stats.json   - 数据统计报告（各 source 样本数）
+  results/reports/decontamination_report.json - 去污染报告
+
 SFT 数据格式 (allenai/tulu-3-sft-mixture):
   {"id": "...", "messages": [{"role": "user", "content": "..."}, ...], "source": "ai2-adapt-dev/..."}
 

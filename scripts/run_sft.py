@@ -3,6 +3,11 @@
 SFT 训练脚本
 用法: python scripts/run_sft.py
 耗时 >30 分钟时建议: caffeinate -i python scripts/run_sft.py
+
+产出文件：
+  results/checkpoints/sft/model.safetensors    - SFT 模型权重
+  results/checkpoints/sft/tokenizer.json       - Tokenizer
+  results/checkpoints/sft/training_log.json    - 训练日志（loss/eval_loss per step）
 """
 
 import sys

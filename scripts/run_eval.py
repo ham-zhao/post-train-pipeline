@@ -4,6 +4,16 @@
 运行 Base / SFT / DPO 三阶段的 benchmark 和安全评估
 
 用法: python scripts/run_eval.py
+
+产出文件：
+  results/eval_results/base/scores.json        - Base 模型 benchmark 分数
+  results/eval_results/sft/scores.json         - SFT 模型 benchmark 分数
+  results/eval_results/dpo/scores.json         - DPO 模型 benchmark 分数
+  results/eval_results/base/safety.json        - Base 模型安全评估详情
+  results/eval_results/sft/safety.json         - SFT 模型安全评估详情
+  results/eval_results/dpo/safety.json         - DPO 模型安全评估详情
+  results/eval_results/generation_comparison.json - 10 prompt 三方生成对比
+  results/eval_results/summary.json            - 汇总（benchmark + safety）
 """
 
 import sys
